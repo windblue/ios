@@ -62,6 +62,8 @@ UIWebView *webView;
     
     //ツールバーをビューに追加
     [self.view addSubview:toolBar];
+    
+    webView.delegate = self;
 }
 
 - (void)viewDidUnload
@@ -73,6 +75,16 @@ UIWebView *webView;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+// ページ読込開始時にインジケータをくるくるさせる
+-(void)webViewDidStartLoad:(UIWebView*)webView{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}
+
+// ページ読込完了時にインジケータを非表示にする
+-(void)webViewDidFinishLoad:(UIWebView*)webView{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 - (void)kick:(NSString *)url
